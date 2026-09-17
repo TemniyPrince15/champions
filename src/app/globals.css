@@ -99,6 +99,6 @@
 .chat-recs{display:grid;gap:7px;margin-top:9px}.chat-rec{display:flex;gap:9px;align-items:center;padding:7px;border:1px solid var(--line);background:var(--panel2);border-radius:11px}.chat-rec img{width:38px;height:38px;border-radius:8px;object-fit:cover}.chat-rec b,.chat-rec small{display:block}.chat-rec b{font-size:11px}.chat-rec small{font-size:10px;color:var(--muted);margin-top:2px}
 :root[data-theme='light'] .ai-insight{background:linear-gradient(135deg,rgba(62,180,136,.08),rgba(75,132,205,.07))}
 @media(max-width:700px){.ai-insight{align-items:stretch;flex-direction:column}.ai-insight .primary-btn{width:100%}.program-photo{height:150px}}
-.ai-status{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-size:10px;color:var(--muted)}
-.ai-status span{width:7px;height:7px;border-radius:999px;background:currentColor;box-shadow:0 0 0 4px color-mix(in srgb,currentColor 10%,transparent)}
-.ai-status.live{color:#52d69f}.ai-status.local{color:#e8ad61}.ai-status.checking{color:var(--muted)}
+
+/* Collapsed sidebar: keep the next-step card inside its icon-only layout. */
+.sidebar.collapsed .side-tip{justify-items:center;padding:11px 8px;min-width:0}.sidebar.collapsed .side-tip svg{margin:0}.sidebar.collapsed .ghost-reset{justify-content:center;padding-left:0;padding-right:0}.side-tip b,.side-tip small{min-width:0;overflow:hidden;text-overflow:ellipsis}.side-tip small{overflow-wrap:anywhere;word-break:break-word}

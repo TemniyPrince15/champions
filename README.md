@@ -1,66 +1,52 @@
-# Pathly AI
+# Pathly AI — LOCUS Case 02 Build
 
-## Run locally
+Pathly is a profile-first admission journey product. The core scenario is:
 
-1. Install dependencies:
-   `npm install`
-2. Create `.env.local` in the project root (the same folder as `package.json`).
-3. Put your OpenAI key there:
-   `OPENAI_API_KEY=sk-proj-...`
-   Quotes are optional.
-4. Optional model:
-   `OPENAI_MODEL=gpt-5.6-luna`
-5. Restart the dev server after changing `.env.local`:
-   `npm run dev`
-6. Open `/api/ai` in the browser. It should show `configured: true` when Next.js can see the key.
+`Landing → Auth → Profile onboarding → Admission Brief → Recommendations → Why this fits → Compare → Roadmap → Next Action → Progress`
 
-Important: `.env.example` is only a template. Next.js does not use it as the runtime environment file.
+## Included
+- Public landing page with value proposition, motivation, student stories and CTA.
+- Demo auth flow (email/password + Google CTA).
+- 3-step onboarding profile.
+- Guardrails for age, grade, GPA, IELTS 0–9 by 0.5, SAT 400–1600 by 10, budget and target year.
+- Explainable deterministic recommendation engine.
+- Curated program cards + global university discovery endpoint.
+- Deadline status: upcoming / passed / verify.
+- Scholarship / funding module.
+- Compare and shortlist.
+- Roadmap with completion state and next action.
+- Editable achievements and activities.
+- Multilingual UI: English, Russian, Kazakh, Chinese, German, Spanish.
+- Dark/light theme and compact/comfortable/large interface sizes.
+- Responsive/mobile layout and reduced-motion support.
 
-## Routes
+## Data transparency
+Curated admissions facts are explicitly marked as demo data in the UI and should be verified against official university pages before real application decisions. Global directory results are discovery-only unless a university/program has a curated record.
 
-- `/` — landing
-- `/auth` — login / registration
-- `/onboarding` — profile setup
-- `/app` — overview
-- `/app/universities` — university discovery
-- `/app/shortlist` — shortlist
-- `/app/roadmap` — roadmap
-- `/app/funding` — funding
-- `/app/profile` — profile
+## Run
 
-The app now uses real browser routes, so the browser Back/Forward buttons work normally.
-
-## AI
-
-`/api/ai` is a server-side proxy to the OpenAI Responses API. The API key never goes into client-side JavaScript.
-
-If the key is missing or OpenAI returns an error, Pathly falls back to its local recommendation engine and returns a diagnostic `errorCode`/`errorMessage` instead of silently hiding the problem.
-
-## University photos
-
-`/api/universities/photo` automatically resolves a university image from Wikimedia/Wikipedia and falls back to a generated SVG placeholder if no image is found. This avoids broken Unsplash URLs and keeps every university card visual.
-
-## OpenAI setup
-
-Create `.env.local` in the same directory as `package.json`:
-
-```env
-OPENAI_API_KEY=sk-proj-your-key-here
-OPENAI_MODEL=gpt-5.6-luna
+```bash
+npm install
+npm run dev
 ```
 
-Do not put the key in a `NEXT_PUBLIC_*` variable. Restart `npm run dev` after changing `.env.local`.
+Open http://localhost:3000
 
-Verify the server sees the key by opening `/api/ai`. It should return `configured: true`. If it is false, Next.js is not reading the environment file. If it is true but chat fails, the response now reports the exact OpenAI HTTP/configuration error instead of silently switching to the local recommendation engine.
+## Pathly AI setup
 
-## App routes
+The app now includes a real server-side AI layer through the OpenAI Responses API.
 
-- `/` landing
-- `/auth` login/signup
-- `/onboarding` onboarding
-- `/app` overview
-- `/app/universities` universities
-- `/app/shortlist` shortlist
-- `/app/roadmap` roadmap
-- `/app/funding` funding
-- `/app/profile` profile
+1. Copy `.env.example` to `.env.local`.
+2. Set `OPENAI_API_KEY` to your server-side API key.
+3. Optionally set `OPENAI_MODEL` (default: `gpt-5.6-luna`).
+4. Run `npm install` and then `npm run dev`.
+
+The browser never receives the API key. Without a key, Pathly falls back to the local recommendation engine so the interface remains usable.
+
+### AI behavior
+- `Analyze my route` analyzes the current profile and current Pathly matches.
+- `Ask Pathly` can answer questions, identify profile gaps, explain trade-offs and suggest universities.
+- AI recommendations are constrained to the supplied university catalog IDs; admissions facts marked as demo data should still be verified on official university websites.
+
+### Product structure
+Pathly remains a single-page application shell, but the UX is split into distinct screens/views: landing, account, onboarding, Overview, Universities, Shortlist, Roadmap, Funding and Profile. Navigation changes the active view without a full page reload.
